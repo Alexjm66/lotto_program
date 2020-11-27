@@ -8,19 +8,20 @@ root.geometry("500x350")
 root.config(bg="White")
 
 def login():
+    try:
+        age = age_entry.get()
+        ages = int(age)
 
-    age = age_entry.get()
-    ages = int(age)
+        if ages <18:
+            messagebox.showerror("Error","You're to Young " +  name_entry.get())
+        else:
+            messagebox.showinfo("","Welcome " + name_entry.get())
 
-    if ages <18:
-        messagebox.showerror("Error","You're to Young " +  name_entry.get())
-    else:
-        messagebox.showinfo("","Welcome " + name_entry.get())
+    except ValueError:
+        messagebox.showerror("Error", "Please Enter a Number")
 
-        root.destroy()
-        lotto_numbers()
-
-
+def exit():
+    root.destroy()
 
 welcome=Label(root,text="Welcome To",bg="gold", fg="black", width="500", height="1", font=['Arial',23,'bold'])
 welcome.pack()
@@ -45,8 +46,11 @@ age.place(x = 10, y = 153)
 age_entry=Entry(root)
 age_entry.place(x = 90, y = 150)
 
-login_btn=Button(root, text="Login", command=login)
+login_btn=Button(root, text="Login",width="10", font=["Arial",15,"bold"], command=login)
 login_btn.place(x = 10, y = 230)
+
+exit_btn=Button(root, text="Exit Program",width="12", font=["Arial",15,"bold"], command=exit)
+exit_btn.place(x = 160, y = 230)
 
 
 def lotto_numbers():
@@ -69,9 +73,6 @@ def lotto_numbers():
 
     lblframe1=LabelFrame(lotto_numbers, text="Number Entry", padx=93, pady=10, bg="gold", fg="red")
     lblframe1.pack(fill="both")
-
-
-
 
     label1=Label(lblframe, text="", bg="gold", font=["Arial", 15, "bold"])
     label1.grid(row=1, column=1,padx=10)
@@ -104,7 +105,7 @@ def lotto_numbers():
     num6 = Entry(lblframe1, width=5)
     num6.grid(row=0, column=6, padx=3)
 
-    winlbl=Label(lotto_numbers,text="Press To Find Out If You Win")
+    winlbl=Label(lotto_numbers,text="Press To Find Out If You Win",bg="white",fg="red",font=["Arial",18,"bold"])
     winlbl.pack()
 
     click_btn=Button(lotto_numbers, text="Click",width="10", font=["Arial",12,"bold"])
@@ -144,22 +145,24 @@ def lotto_numbers():
                 count += 1
             print(count)
         if count <= 1:
-            messagebox.showerror("Attetion", "Unfortunately you won nothing")
+            messagebox.showerror("Attetion","You got 1 number, unfortunately you won nothing. Please login again to play")
+            lotto_numbers.destroy()
 
         elif count == 2:
             messagebox.showinfo("Congratz", "You Won R20.00")
-
+            lotto_numbers.destroy()
         elif count == 3:
             messagebox.showinfo("Congrtaz","You won R100.50")
-
+            lotto_numbers.destroy()
         elif count == 4:
             messagebox.showinfo("Congrtaz","You won R2.384")
-
+            lotto_numbers.destroy()
         elif count == 5:
             messagebox.showinfo("Congrtaz","You won R8.584.00")
 
         elif count == 6:
             messagebox.showinfo("Congrtaz","You won R10.000 000.00")
+            lotto_numbers.destroy()
 
     click_btn.configure(command=random_numbers)
 
